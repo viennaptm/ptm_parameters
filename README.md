@@ -32,7 +32,7 @@ Parameters are published under [CC BY 4.0](https://creativecommons.org/licenses/
 - **Drazen Petrov** - [GitHub](https://github.com/drazen-petrov)
 - **Christian Margreitter** - [GitHub](https://github.com/CMargreitter)  
 - **Melanie Grandits**
- - **Chris Oostenbrink** - [GitHub](https://github.com/oostenbrink)
+- **Chris Oostenbrink** - [GitHub](https://github.com/oostenbrink)
 - **Bojan Žagrović** - [GitHub](https://github.com/bojanzagrovic)
 
 

@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=77", "setuptools-scm", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
+
+[project]
+name = "ptm_parameters"
+dynamic = ["version"]
+description = "GROMOS force field parameters for protein post-translational modifications."
+readme = "README.md"
+authors = [
+  { name = "Drazen Petrov", email = "durozlikovski@gmail.com" },
+  { name = "Christian Margreitter", email = "christian.margreitter@gmail.com" },
+  { name = "Melanie Grandits", email = "melanie.grandits@univie.ac.at" },
+  { name = "Chris Oostenbrink", email = "chris.oostenbrink@boku.ac.at" },
+  { name = "Bojan Žagrović", email = "bojan.zagrovich@univie.ac.at" }
+
+]
+maintainers = [
+  { name = "Drazen Petrov", email = "durozlikovski@gmail.com" },
+  { name = "Christian Margreitter", email = "christian.margreitter@gmail.com" }
+
+]
+keywords = [
+  "Post-translational modifications",
+  "ptm_parameters",
+  "ptm",
+  "parameters",
+  "python",
+  "python-packages",
+  "semantic-versions"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13"
+]
+
+license = "CC-BY-4.0"
+license-files = [
+  "LICEN[CS]E*"
+]
+
+requires-python = ">=3.9"
+dependencies = [
+    "pydantic>=2"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.4.0"
+]
+
+build = [
+    "twine",
+    "build"
+]
+
+[project.urls]
+Homepage = "https://viennaptm.univie.ac.at"
+Repository = "https://github.com/viennaptm/ptm_parameters"
+
+[project.scripts]
+viennaptm = "viennaptm.entrypoints.viennaptm:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+viennaptm = ["resources/**/*"]
