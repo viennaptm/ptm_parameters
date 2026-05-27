@@ -26,6 +26,7 @@ maintainers = [
 ]
 keywords = [
   "Post-translational modifications",
+  "Force field",
   "ptm_parameters",
   "ptm",
   "parameters",
@@ -68,9 +69,6 @@ build = [
 Homepage = "https://viennaptm.univie.ac.at"
 Repository = "https://github.com/viennaptm/ptm_parameters"
 
-[project.scripts]
-viennaptm = "viennaptm.entrypoints.viennaptm:main"
-
 [tool.setuptools.packages.find]
 where = ["."]
 
@@ -78,4 +76,4 @@ where = ["."]
 include-package-data = true
 
 [tool.setuptools.package-data]
-viennaptm = ["resources/**/*"]
+ptm_parameters = ["GROMACS/**/*", "GROMOS/**/*"]
