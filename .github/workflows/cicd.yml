@@ -1,0 +1,96 @@
+name: ViennaPTM Parameters CICD
+
+on:
+  push:
+    branches: ["**"]
+    tags:
+      - "v*.*.*"
+
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  release-testpypi:
+    name: 🧪 Publish to TestPyPI
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/${{ github.event.repository.name }}/
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clean previous builds
+        run: rm -rf dist build *.egg-info
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade build "setuptools>=77" wheel "twine>=6"
+
+      - name: Build distributions
+        run: python -m build
+
+      - name: Check package metadata
+        run: python -m twine check dist/*
+
+      - name: Upload to TestPyPI
+        run: |
+          python -m twine upload \
+            --repository-url https://test.pypi.org/legacy/ \
+            dist/* --verbose
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN_PARAMETERS }}
+
+  release-pypi:
+    name: 🚀 Publish to PyPI (manual confirmation required)
+    runs-on: ubuntu-latest
+    needs: release-testpypi
+    if: github.ref_type == 'tag'
+
+    environment:
+      name: pypi
+      url: https://pypi.org/project/${{ github.event.repository.name }}/
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clean previous builds
+        run: rm -rf dist build *.egg-info
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade build "setuptools>=77" wheel "twine>=6"
+
+      - name: Build distributions
+        run: python -m build
+
+      - name: Check package metadata
+        run: python -m twine check dist/*
+
+      - name: Upload to PyPI
+        run: |
+          python -m twine upload dist/* --verbose
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN_PARAMETERS }}
